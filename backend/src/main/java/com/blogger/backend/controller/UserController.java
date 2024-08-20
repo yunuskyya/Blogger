@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("/api/v1/user")
+    @PostMapping("/api/v1/users")
     public GenericMessage registerUser(@Valid @RequestBody RegisterUserRequest request) {
         userService.registerUser(request);
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.success.message.uccessfully",
