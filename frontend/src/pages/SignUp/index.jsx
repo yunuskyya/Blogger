@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from 'axios';
 
 export function SignUp() {
 
@@ -6,6 +7,16 @@ export function SignUp() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [passwordRepeat, serPasswordRepeat] = useState()
+    
+    const onsubmit = (event) => {
+        event.preventDefault()
+        axios.post('/api/v1/user', {
+            username,
+            email,
+            password
+        })
+        
+    }
 
     return (
         <> 
@@ -26,7 +37,7 @@ export function SignUp() {
             <label htmlFor="passwordRepeat">Repeat Password</label>
             <input id="passwordRepeat" onChange={(event)=> serPasswordRepeat(event.target.value)} />
         </div>
-        <button disabled= {password && password!= passwordRepeat}>Sign Up</button>
+        <button disabled= {password && password!= passwordRepeat} onClick={onsubmit}>Sign Up</button>
 
       </>
      
