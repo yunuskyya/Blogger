@@ -1,4 +1,4 @@
-package com.blogger.backend.service;
+package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.config.ModelMapperConfig;
 import com.blogger.backend.dto.request.CredentialsRequest;
@@ -8,6 +8,7 @@ import com.blogger.backend.exception.AuthenticationException;
 import com.blogger.backend.model.Token;
 import com.blogger.backend.model.User;
 import com.blogger.backend.repository.UserRepository;
+import com.blogger.backend.service.AuthService;
 import com.blogger.backend.token.TokenService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
