@@ -2,7 +2,7 @@ spring:
   Jpa:
     open-in-view: false
   application:
-    name: login
+    name: blogger
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:file:./data/devdb2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
@@ -29,7 +29,7 @@ spring:
 
 logging:
   file:
-    name: ./logs/login.log
+    name: ./logs/blogger.log
   level:
     root: info
     com.: DEBUG
