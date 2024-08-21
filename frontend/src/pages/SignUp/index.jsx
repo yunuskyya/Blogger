@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from 'react-i18next';  // Bu satırı ekleyin
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { signUp } from "./api";
 import { Input } from "./components/Input";
+import { LanguageSelector } from "../../shared/components/LanguageSelector";
 
 export function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +19,7 @@ export function SignUp() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const { t } = useTranslation(); 
 
   useEffect(() => {
     setErrors(function(lasterErrors) {
@@ -104,7 +107,7 @@ export function SignUp() {
   };
   const passwordRepeatError = useMemo(() => {
     if( password && password!== passwordRepeat){
-      return 'Passwords do not match';
+      return t('passwordMismatch');
     }
     return '';
   },[password, passwordRepeat]);
@@ -119,27 +122,27 @@ export function SignUp() {
           className="card-header text-center mb-4"
           style={{ backgroundColor: "#f7f7f7", borderRadius: "10px" }}
         >
-          <h3 className="m-0">Sign Up</h3>
+          <h3 className="m-0">{t('signUp')}</h3>
         </div>
         <div className="card-body">
           <form onSubmit={onSubmit}>
             <Input
               id="firstName"
-              label="First Name"
+              label={t('firstName')}
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
               error={errors.firstName}
             />
             <Input
               id="lastName"
-              label="Last Name"
+              label={t('lastName')}
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
               error={errors.lastName}
             />
             <div className="mb-3">
               <label htmlFor="phoneNumber" className="form-label">
-                Phone Number
+                {t('phoneNumber')}
               </label>
               <PhoneInput
                 country={"tr"}
@@ -159,14 +162,14 @@ export function SignUp() {
             </div>
             <Input
               id="username"
-              label="Username"
+              label={t('username')}
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               error={errors.username}
             />
             <Input
               id="email"
-              label="Email"
+              label={t('email')}
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
@@ -174,7 +177,7 @@ export function SignUp() {
             />
             <Input
               id="password"
-              label="Password"
+              label={t('password')}
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
@@ -182,7 +185,7 @@ export function SignUp() {
             />
             <Input
               id="passwordRepeat"
-              label="Repeat Password"
+              label={t('passwordRepeat')}
               type="password"
               value={passwordRepeat}
               onChange={(event) => setPasswordRepeat(event.target.value)}
@@ -204,10 +207,11 @@ export function SignUp() {
                   aria-hidden="true"
                 ></span>
               )}
-              Sign Up
+              {t('signUp')} 
             </button>
           </form>
         </div>
+        <LanguageSelector />
       </div>
     </div>
   );
