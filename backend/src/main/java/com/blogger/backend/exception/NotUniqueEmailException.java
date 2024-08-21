@@ -13,7 +13,7 @@ public class NotUniqueEmailException extends RuntimeException {
     }
 
     public Map<String, String> getValidationErrors() {
-        return Collections.singletonMap("email", Messages.getMessageForLocale("logim.validation.notunique.email",
+        return Collections.singletonMap("email", Messages.getMessageForLocale("blogger.validation.notunique.email",
                 LocaleContextHolder.getLocale()));
     }
 }
