@@ -18,9 +18,10 @@ public class UserController {
 
 
     @PostMapping("/api/v1/users")
-    public GenericMessage registerUser(@Valid @RequestBody RegisterUserRequest request) {
+    public GenericMessage registerUser(@Valid @RequestBody RegisterUserRequest request, @RequestHeader("Accept-Language") String language) {
+        System.out.println("Received Accept-Language: " + language);
         userService.registerUser(request);
-        return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.success.message.uccessfully",
+        return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.success.message.successfully",
                 LocaleContextHolder.getLocale()));
     }
 }
