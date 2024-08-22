@@ -1,6 +1,7 @@
 package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
+import com.blogger.backend.exception.InvalidTokenException;
 import com.blogger.backend.model.User;
 import com.blogger.backend.model.enums.Role;
 import com.blogger.backend.repository.UserRepository;
@@ -51,4 +52,18 @@ public class UserServiceImpl implements UserService {
             mailService.sendAccountActivationEmail(newUser.getEmail(),newUser.getActivationToken());
             logger.info("User registered: {}", newUser.getUsername());
     }
+
+    @Override
+    public void activationUser(String token) {
+        User inDB = userRepository.findByActivationToken(token);
+        if (inDB == null) {
+            throw new InvalidTokenException();
+        }
+        inDB.setActive(true);
+        inDB.setActivationToken(null);
+        userRepository.save(inDB);
+        logger.info("User activated: {}", inDB.getUsername());
+
+    }
+
 }
