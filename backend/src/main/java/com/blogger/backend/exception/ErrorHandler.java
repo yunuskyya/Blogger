@@ -26,7 +26,8 @@ public class ErrorHandler {
             UserNotFoundException.class,
             AuthenticationException.class,
             GeneralErrorException.class,
-            AccessDeniedException.class
+            AccessDeniedException.class,
+            InvalidTokenException.class
     })
     ResponseEntity<ApiError> handleCustomException(Exception exception, HttpServletRequest request) {
         ApiError error = new ApiError();
@@ -55,6 +56,8 @@ public class ErrorHandler {
             error.setStatus(401);
         } else if (exception instanceof AccessDeniedException) {
             error.setStatus(403);
+        }else if (exception instanceof InvalidTokenException) {
+            error.setStatus(400);
         }
 
         return ResponseEntity.status(error.getStatus()).body(error);
