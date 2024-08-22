@@ -47,16 +47,22 @@ public class AuthServiceImp implements AuthService {
                         .orElseThrow(() -> {
                             logger.error("User not found: {}",
                                     credentials.email() != null ? credentials.email() : credentials.username());
-                            return new AuthenticationException();
+                            throw new AuthenticationException("blogger.user.notfound.error.message");
                         }));
 
-        // Kullanıcı doğrulamasını yapın
         if (!passwordEncoder.matches(credentials.password(), inDB.getPassword())) {
             logger.error("Invalid credentials for user: {}", credentials.email() != null ? credentials.email() : credentials.username());
-            throw new AuthenticationException();
-        } else if (!inDB.isActive() || inDB.isDeleted()) {
-            logger.error("User is not active or deleted: {}", credentials.email() != null ? credentials.email() : credentials.username());
-            throw new AuthenticationException();
+            throw new AuthenticationException("blogger.authentication.error.message");
+        }
+
+        if (!inDB.isActive()) {
+            logger.error("User is not active: {}", inDB.getEmail());
+            throw new AuthenticationException("blogger.authentication.inactive.message");
+        }
+
+        if (inDB.isDeleted()) {
+            logger.error("User is deleted: {}", inDB.getEmail());
+            throw new AuthenticationException("blogger.authentication.deleted.message");
         }
 
         logger.info("User authenticated: {}", inDB.getEmail());
@@ -64,6 +70,7 @@ public class AuthServiceImp implements AuthService {
         Token token = tokenService.generateToken(userResp, credentials);
         return new AuthResponse(userResp, token);
     }
+
 
     @Override
     public void logout(String authorizationHeader) {
