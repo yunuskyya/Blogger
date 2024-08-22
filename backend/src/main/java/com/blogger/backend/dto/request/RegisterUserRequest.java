@@ -34,6 +34,9 @@ public class RegisterUserRequest{
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\.]).{8,}$", message = "{blogger.validation.pattern.password}")
     private String password;
 
+    private boolean active= false;
+
+
 }
 
 
