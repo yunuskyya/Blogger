@@ -10,17 +10,23 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
 
-    @PostMapping("/api/v1/users")
-    public GenericMessage registerUser(@Valid @RequestBody RegisterUserRequest request) {
+    @PostMapping()
+    GenericMessage registerUser(@Valid @RequestBody RegisterUserRequest request) {
         userService.registerUser(request);
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.success.message.successfully",
+                LocaleContextHolder.getLocale()));
+    }
+    @PatchMapping("/{token}activation")
+    GenericMessage activationUser(@PathVariable String token) {
+        userService.activationUser(token);
+        return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.activation.success.message.successfully",
                 LocaleContextHolder.getLocale()));
     }
 }
