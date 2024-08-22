@@ -6,12 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
-@ResponseStatus(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED)
+@ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class AuthenticationException extends RuntimeException {
-    public AuthenticationException() {
-        super(Messages.getMessageForLocale("blogger.authentication.error.message", LocaleContextHolder.getLocale()));
-    }
 
+    public AuthenticationException(String messageKey) {
+        super(Messages.getMessageForLocale(messageKey, LocaleContextHolder.getLocale()));
+    }
 }
+
 
 
