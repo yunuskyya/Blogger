@@ -233,7 +233,6 @@ export function SignUp() {
             )}
           </form>
         </div>
-        <LanguageSelector />
       </div>
     </div>
   );
