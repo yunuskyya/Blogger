@@ -10,5 +10,7 @@
   "passwordMismatch": "Password mismatch",
   "genericError": "Unexpected error occured. Please try again",
   "userNotFoundError": "User not found",
-  "login": "Login"
+  "login": "Login",
+  "phoneNumberRequired": "Phone number is required"
+
 }

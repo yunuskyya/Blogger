@@ -10,5 +10,6 @@
   "passwordMismatch": "Sifreniz eslesmiyor",
   "genericError": "Beklenmedik bir hata olustu. Lutfen tekrar deneyin",
   "userNotFoundError": "Kullanici bulunamadi",
-  "login": "Giris yap"
+  "login": "Giris yap",
+  "phoneNumberRequired": "Telefon numarası gerekli"
 }
