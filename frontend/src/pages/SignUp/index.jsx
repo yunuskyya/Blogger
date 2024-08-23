@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next"; // Bu satırı ekleyin
+import { useTranslation } from "react-i18next";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { signUp } from "./api";
 import { Input } from "./components/Input";
 import { LanguageSelector } from "../../shared/components/LanguageSelector";
+import { Alert } from "../../shared/components/Alert";""
+import { Spinner } from "../../shared/components/spinner";
 
 export function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -19,61 +21,49 @@ export function SignUp() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [showPhoneNumberWarning, setShowPhoneNumberWarning] = useState(false); // Bu satırı ekleyin
+  const [showPhoneNumberWarning, setShowPhoneNumberWarning] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        firstName: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      firstName: undefined,
+    }));
   }, [firstName]);
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        lastName: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      lastName: undefined,
+    }));
   }, [lastName]);
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        phoneNumber: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      phoneNumber: undefined,
+    }));
   }, [phoneNumber]);
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        username: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      username: undefined,
+    }));
   }, [username]);
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        email: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      email: undefined,
+    }));
   }, [email]);
 
   useEffect(() => {
-    setErrors(function (lasterErrors) {
-      return {
-        ...lasterErrors,
-        password: undefined,
-      };
-    });
+    setErrors((lasterErrors) => ({
+      ...lasterErrors,
+      password: undefined,
+    }));
   }, [password]);
 
   const onSubmit = async (event) => {
@@ -81,13 +71,12 @@ export function SignUp() {
     setSuccessMessage("");
     setApiProgress(true);
 
-    // Telefon numarası kontrolü
     if (!phoneNumber || phoneNumber.length <= 3) {
-      setShowPhoneNumberWarning(true); // Uyarıyı göster
+      setShowPhoneNumberWarning(true);
       setApiProgress(false);
       return;
     } else {
-      setShowPhoneNumberWarning(false); // Uyarıyı gizle
+      setShowPhoneNumberWarning(false);
     }
 
     if (password !== passwordRepeat) {
@@ -138,6 +127,7 @@ export function SignUp() {
           <h3 className="m-0">{t("signUp")}</h3>
         </div>
         <div className="card-body">
+          <LanguageSelector /> 
           <form onSubmit={onSubmit}>
             <Input
               id="firstName"
@@ -208,29 +198,24 @@ export function SignUp() {
               onChange={(event) => setPasswordRepeat(event.target.value)}
               error={passwordRepeatError}
             />
-            <div>
-              {successMessage && (
-                <div className="alert alert-success">{successMessage}</div>
-              )}
-            </div>
+            {successMessage && (
+              <Alert styleType="success">{successMessage}</Alert>
+            )}
+            {showPhoneNumberWarning && (
+              <Alert styleType="danger">
+                {t("phoneNumberRequired")}
+              </Alert>
+            )}
             <button
               className="btn btn-primary w-100"
               type="submit"
               disabled={apiProgress || !password || password !== passwordRepeat}
             >
               {apiProgress && (
-                <span
-                  className="spinner-border spinner-border-sm"
-                  aria-hidden="true"
-                ></span>
+                <Spinner  />
               )}
               {t("signUp")}
             </button>
-            {showPhoneNumberWarning && (
-              <div className="alert alert-danger">
-                Lütfen geçerli bir telefon numarası girin
-              </div>
-            )}
           </form>
         </div>
       </div>
