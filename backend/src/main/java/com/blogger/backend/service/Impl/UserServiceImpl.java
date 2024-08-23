@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
             newUser.setAuthorities(new HashSet<>() {{
                 add(Role.ROLE_USER);
             }});
+            newUser.setActive(false);
             userRepository.saveAndFlush(newUser);
             mailService.sendAccountActivationEmail(newUser.getEmail(),newUser.getActivationToken());
             logger.info("User registered: {}", newUser.getUsername());

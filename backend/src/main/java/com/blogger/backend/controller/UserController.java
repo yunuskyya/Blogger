@@ -23,7 +23,7 @@ public class UserController {
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.success.message.successfully",
                 LocaleContextHolder.getLocale()));
     }
-    @PatchMapping("/{token}activation")
+    @PatchMapping("/{token}/active")
     GenericMessage activationUser(@PathVariable String token) {
         userService.activationUser(token);
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.activation.success.message.successfully",

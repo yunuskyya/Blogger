@@ -16,8 +16,7 @@ public class MailServiceImpl implements MailService {
 
     private final JavaMailSender emailSender;
     private final String changePasswordUrl = "http://localhost:5173/login";
-    private final String resetPasswordUrl = "http://localhost:5173/set-password";
-
+    private final String activationToken = "http://localhost:5173/active";
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender) {
         this.emailSender = emailSender;
@@ -41,7 +40,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendAccountActivationEmail(String to, String token) {
         String subject = "BLOGGER Hesap Aktivasyonu";
-        String activationUrl = resetPasswordUrl + "?token=" + token;
+        String activationUrl = activationToken + "/" + token; // Bu şekilde olmalı
         String text = String.format(
                 "Merhaba,<br><br>" +
                         "Hesabınızı aktifleştirmek için lütfen <a href=\"%s\">buraya tıklayın</a>.<br><br>" +
@@ -75,7 +74,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendPasswordResetEmail(String to, String token) {
         String subject = "BLOGGER Şifre Sıfırlama";
-        String resetUrl = resetPasswordUrl + "?token=" + token;
+        String resetUrl = changePasswordUrl+ "?token=" + token;
         String text = String.format(
                 "Merhaba,<br><br>" +
                         "Şifrenizi sıfırlamak için lütfen <a href=\"%s\">buraya tıklayın</a>.<br><br>" +
