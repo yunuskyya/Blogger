@@ -11,5 +11,7 @@
   "genericError": "Beklenmedik bir hata olustu. Lutfen tekrar deneyin",
   "userNotFoundError": "Kullanici bulunamadi",
   "login": "Giris yap",
-  "phoneNumberRequired": "Telefon numarası gerekli"
+  "phoneNumberRequired": "Telefon numarası gerekli",
+  "activeUsers": "Hesap Aktivasyonu"
+
 }
