@@ -127,7 +127,6 @@ export function SignUp() {
           <h3 className="m-0">{t("signUp")}</h3>
         </div>
         <div className="card-body">
-          <LanguageSelector /> 
           <form onSubmit={onSubmit}>
             <Input
               id="firstName"
