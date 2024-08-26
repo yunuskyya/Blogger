@@ -1,6 +1,8 @@
 package com.blogger.backend.dto.request;
 
 import com.blogger.backend.validation.annotations.UniqueEmail;
+import com.blogger.backend.validation.annotations.UniquePhoneNumber;
+import com.blogger.backend.validation.annotations.UniqueUsername;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -20,9 +22,11 @@ public class RegisterUserRequest{
     private String lastName;
     @NotBlank(message = "{blogger.validation.notBlank.phoneNumber}")
     @Size(min = 11, max = 13, message ="{blogger.validation.size.phoneNumber}")
+    @UniquePhoneNumber
     private String phoneNumber;
     @NotBlank(message = "{blogger.validation.notBlank.username}")
     @Size(min = 3, max = 150, message ="{blogger.validation.size.username}")
+    @UniqueUsername
     private String username;
 
     @NotBlank(message = "{blogger.validation.notBlank.email}")
