@@ -38,20 +38,21 @@ public class AuthServiceImp implements AuthService {
     }
 
     private static final Logger logger = LogManager.getLogger(AuthServiceImp.class);
-
-
     @Override
     public AuthResponse authenticate(CredentialsRequest credentials) {
         User inDB = userRepository.findByEmail(credentials.email())
                 .orElseGet(() -> userRepository.findByUsername(credentials.username())
-                        .orElseThrow(() -> {
-                            logger.error("User not found: {}",
-                                    credentials.email() != null ? credentials.email() : credentials.username());
-                            throw new AuthenticationException("blogger.user.notfound.error.message");
-                        }));
+                        .orElseGet(() -> userRepository.findByPhoneNumber(credentials.phoneNumber())
+                                .orElseThrow(() -> {
+                                    logger.error("User not found: {}",
+                                            credentials.email() != null ? credentials.email() :
+                                                    (credentials.username() != null ? credentials.username() : credentials.phoneNumber()));
+                                    return new AuthenticationException("blogger.user.notfound.error.message");
+                                })));
 
         if (!passwordEncoder.matches(credentials.password(), inDB.getPassword())) {
-            logger.error("Invalid credentials for user: {}", credentials.email() != null ? credentials.email() : credentials.username());
+            logger.error("Invalid credentials for user: {}", credentials.email() != null ? credentials.email() :
+                    (credentials.username() != null ? credentials.username() : credentials.phoneNumber()));
             throw new AuthenticationException("blogger.authentication.error.message");
         }
 
