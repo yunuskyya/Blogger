@@ -12,6 +12,7 @@
   "userNotFoundError": "User not found",
   "login": "Login",
   "phoneNumberRequired": "Phone number is required",
-  "activeUsers": "Active Users"
+  "activeUsers": "Active Users",
+  "usernameEmailOrPhoneNumber": "Username, E-mail or Phone Number"
 
 }

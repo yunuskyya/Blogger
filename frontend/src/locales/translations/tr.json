@@ -12,6 +12,8 @@
   "userNotFoundError": "Kullanici bulunamadi",
   "login": "Giris yap",
   "phoneNumberRequired": "Telefon numarası gerekli",
-  "activeUsers": "Hesap Aktivasyonu"
+  "activeUsers": "Hesap Aktivasyonu",
+  "usernameEmailOrPhoneNumber": "Kullanıcı Adı, E-Posta veya Telefon Numarası"
+
 
 }
