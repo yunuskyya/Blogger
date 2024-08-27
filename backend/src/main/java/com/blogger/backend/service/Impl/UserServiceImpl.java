@@ -1,6 +1,7 @@
 package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
+import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.exception.InvalidTokenException;
 import com.blogger.backend.model.User;
 import com.blogger.backend.model.enums.Role;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,4 +70,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Page<GetAllUserResponse> getAllUsers(Pageable pageable) {
+    Page <User> users = userRepository.findAll(pageable);
+    return users.map(user -> modelMapperForResponse.map(user, GetAllUserResponse.class));}
 }
