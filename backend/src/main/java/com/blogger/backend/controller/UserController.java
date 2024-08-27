@@ -1,12 +1,16 @@
 package com.blogger.backend.controller;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
+import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.service.UserService;
 import com.blogger.backend.shared.GenericMessage;
 import com.blogger.backend.shared.Messages;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,5 +32,11 @@ public class UserController {
         userService.activationUser(token);
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.activation.success.message.successfully",
                 LocaleContextHolder.getLocale()));
+    }
+
+    @GetMapping()
+    public  ResponseEntity<Page<GetAllUserResponse>> getAllUsers(Pageable pageable) {
+
+        return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 }
