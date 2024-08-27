@@ -17,7 +17,7 @@ export function LanguageSelector() {
         height="18"
         alt="Turkce"
         onClick={() => onSelectLanguage("tr")}
-        style={{ cursor: "pointer", marginRight: "10px" }} // Araya boşluk eklemek için margin
+        style={{ cursor: "pointer", marginRight: "10px" }} 
       />
       <img
         role="button"
