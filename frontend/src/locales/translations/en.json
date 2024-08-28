@@ -13,6 +13,7 @@
   "login": "Login",
   "phoneNumberRequired": "Phone number is required",
   "activeUsers": "Active Users",
-  "usernameEmailOrPhoneNumber": "Username, E-mail or Phone Number"
+  "usernameEmailOrPhoneNumber": "Username, E-mail or Phone Number",
+  "dontHaveAccount": "Don't have an account?"
 
 }
