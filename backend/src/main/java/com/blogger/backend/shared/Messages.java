@@ -1,7 +1,6 @@
 package com.blogger.backend.shared;
 
-import org.springframework.context.i18n.LocaleContextHolder;
-
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -10,8 +9,8 @@ public class Messages {
         return ResourceBundle.getBundle("messages", locale).getString(key);
     }
 
-    public static String getMessageForLocale(String key, Object... args) {
-        Locale locale = LocaleContextHolder.getLocale();
-        return getMessageForLocale(key, locale, args);
+    public static String getMessageForLocale(String messageKey, Locale locale, Object... arguments) {
+        String message = getMessageForLocale(messageKey, locale);
+        return MessageFormat.format(message, arguments);
     }
 }
