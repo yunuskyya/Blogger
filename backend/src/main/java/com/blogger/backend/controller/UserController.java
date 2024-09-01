@@ -2,6 +2,7 @@ package com.blogger.backend.controller;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
 import com.blogger.backend.dto.response.GetAllUserResponse;
+import com.blogger.backend.dto.response.GetUserByIdResponse;
 import com.blogger.backend.service.UserService;
 import com.blogger.backend.shared.GenericMessage;
 import com.blogger.backend.shared.Messages;
@@ -36,7 +37,10 @@ public class UserController {
 
     @GetMapping()
     public  ResponseEntity<Page<GetAllUserResponse>> getAllUsers(Pageable pageable) {
-
         return ResponseEntity.ok(userService.getAllUsers(pageable));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<GetUserByIdResponse> getUserById(@PathVariable int id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }
