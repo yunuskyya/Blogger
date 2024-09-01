@@ -2,7 +2,9 @@ package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
 import com.blogger.backend.dto.response.GetAllUserResponse;
+import com.blogger.backend.dto.response.GetUserByIdResponse;
 import com.blogger.backend.exception.InvalidTokenException;
+import com.blogger.backend.exception.UserNotFoundException;
 import com.blogger.backend.model.User;
 import com.blogger.backend.model.enums.Role;
 import com.blogger.backend.repository.UserRepository;
@@ -74,4 +76,15 @@ public class UserServiceImpl implements UserService {
     public Page<GetAllUserResponse> getAllUsers(Pageable pageable) {
     Page <User> users = userRepository.findAll(pageable);
     return users.map(user -> modelMapperForResponse.map(user, GetAllUserResponse.class));}
+
+    @Override
+    public GetUserByIdResponse getUserById(int id) {
+        User inDb = userRepository.findById(id).orElseThrow(() -> {
+            logger.error("User not found with id: {}", id);
+            throw new UserNotFoundException(id);
+        });
+        return modelMapperForResponse.map(inDb, GetUserByIdResponse.class);
+    }
+
+
 }
