@@ -1,7 +1,6 @@
 package com.blogger.backend.model;
 
 import com.blogger.backend.model.enums.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,23 +21,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @JsonIgnore
     private String username;
     private String firstName;
     private String lastName;
-    @JsonIgnore
     private String email;
-    @JsonIgnore
     private String password;
-    @JsonIgnore
     private String phoneNumber;
     private boolean active;
     private boolean isDeleted;
-    @JsonIgnore
     private String activationToken;
-    @JsonIgnore
     private String passwordResetToken;
     private String profileDescription;
+    @Lob
+    private String image;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Token> tokens;
