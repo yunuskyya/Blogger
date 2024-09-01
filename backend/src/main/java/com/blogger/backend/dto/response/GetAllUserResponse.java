@@ -8,8 +8,14 @@ public class GetAllUserResponse {
     private int id;
     private String username;
     private String email;
-    private String phoneNumber;
-    private boolean active;
-    private boolean isDeleted;
-}
+    private String firstName;
+    private String lastName;
+    private String image;
 
+    public String getFullName() {
+        return (firstName != null ? firstName : "") +
+                " " +
+                (lastName != null ? lastName : "");
+    }
+
+}
