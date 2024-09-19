@@ -1,4 +1,4 @@
-package com.blogger.backend.token;
+package com.blogger.backend.security.token;
 
 import java.io.IOException;
 
