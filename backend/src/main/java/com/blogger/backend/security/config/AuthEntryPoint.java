@@ -1,11 +1,10 @@
-package com.blogger.backend.config;
+package com.blogger.backend.security.config;
 
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -14,12 +13,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/*
- * Bu sınıf, kullanıcının kimlik doğrulaması başarısız olduğunda çalışır ve kullanıcıya kimlik doğrulaması hatası mesajını gönderir.
- * Bu sınıf, AuthenticationEntryPoint interface'i uygular.
- * AuthenticationEntryPoint interface'i, kimlik doğrulaması başarısız olduğunda çalışacak özelleştirilmiş bir işlemi tanımlamak için kullanılır.
- * commence() metodu, kimlik doğrulaması başarısız olduğunda çalışacak işlemi tanımlar.
- */
 public class AuthEntryPoint implements AuthenticationEntryPoint {
     private static final Logger logger = LogManager.getLogger(AuthEntryPoint.class);
 
