@@ -28,6 +28,8 @@ public class User {
     private String password;
     private String phoneNumber;
     private boolean active;
+    private boolean locked;
+    private int loginAttemps;
     private boolean isDeleted;
     private String activationToken;
     private String passwordResetToken;
