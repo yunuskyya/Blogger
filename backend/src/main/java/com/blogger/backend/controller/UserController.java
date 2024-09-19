@@ -1,8 +1,10 @@
 package com.blogger.backend.controller;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
+import com.blogger.backend.dto.request.UserUnLockedRequset;
 import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.dto.response.GetUserByIdResponse;
+import com.blogger.backend.repository.UserRepository;
 import com.blogger.backend.service.UserService;
 import com.blogger.backend.shared.GenericMessage;
 import com.blogger.backend.shared.Messages;
@@ -14,12 +16,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.blogger.backend.constant.BloggerConstant.API_V1;
+
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(API_V1 +"/users")
 @AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
 
     @PostMapping()
@@ -42,5 +47,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<GetUserByIdResponse> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+    @PutMapping("/{requset}/unLocked")
+    GenericMessage unLockedUser(@PathVariable UserUnLockedRequset requset){
+        userService.unLockedUser(requset);
+        return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.unLocked.success.message.successfully",
+                LocaleContextHolder.getLocale()));
     }
 }
