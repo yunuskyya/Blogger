@@ -1,8 +1,10 @@
 package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.dto.request.RegisterUserRequest;
+import com.blogger.backend.dto.request.UserUnLockedRequset;
 import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.dto.response.GetUserByIdResponse;
+import com.blogger.backend.exception.GeneralErrorException;
 import com.blogger.backend.exception.InvalidTokenException;
 import com.blogger.backend.exception.UserNotFoundException;
 import com.blogger.backend.model.User;
@@ -42,7 +44,6 @@ public class UserServiceImpl implements UserService {
         this.modelMapperForRequest = modelMapperForRequest;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     @Transactional(rollbackOn = MailException.class)
@@ -84,6 +85,19 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(id);
         });
         return modelMapperForResponse.map(inDb, GetUserByIdResponse.class);
+    }
+
+    @Override
+    public void unLockedUser(UserUnLockedRequset requset) {
+        User userInDb = userRepository.findByEmail(requset.getEmail()).orElseThrow(() -> {
+            logger.error("User not found with email: {}", requset.getEmail());
+            return new UserNotFoundException("User not found with email: " + requset.getEmail());
+        });
+        if(!userInDb.isLocked()){
+            throw new GeneralErrorException("user.already.unLocked.error.message");
+        }
+        userInDb.setLocked(false);
+        userRepository.save(userInDb);
     }
 
 
