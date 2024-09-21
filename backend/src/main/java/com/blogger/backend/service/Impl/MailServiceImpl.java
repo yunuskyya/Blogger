@@ -2,7 +2,6 @@ package com.blogger.backend.service.Impl;
 
 import com.blogger.backend.model.User;
 import com.blogger.backend.service.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ public class MailServiceImpl implements MailService {
     private final JavaMailSender emailSender;
     private final String changePasswordUrl = "http://localhost:5173/login";
     private final String activationToken = "http://localhost:5173/active";
-    @Autowired
     public MailServiceImpl(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
@@ -32,7 +30,6 @@ public class MailServiceImpl implements MailService {
             helper.setText(text, true); // HTML içerik olarak işaretle
             emailSender.send(message);
         } catch (MessagingException e) {
-            // Hata yönetimi yapılabilir
             e.printStackTrace();
         }
     }
