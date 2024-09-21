@@ -5,7 +5,7 @@ import "react-phone-input-2/lib/style.css";
 import { signUp } from "./api";
 import { Input } from "./components/Input";
 import { Alert } from "../../shared/components/Alert";""
-import { Spinner } from "../../shared/components/spinner";
+import { Spinner } from "../../shared/components/Spinner";
 
 export function SignUp() {
   const [firstName, setFirstName] = useState("");
