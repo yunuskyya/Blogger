@@ -8,6 +8,9 @@ public interface AuthService {
     AuthResponse authenticate(CredentialsRequest credentials);
 
     void logout(String authorizationHeader);
+
+    int getCurrentUserId();
+
 }
 
 
