@@ -64,10 +64,5 @@ public class CurrentUser implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
 }
 
