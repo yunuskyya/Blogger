@@ -1,11 +1,11 @@
 package com.blogger.backend.service.Impl;
 
+import com.blogger.backend.model.User;
 import com.blogger.backend.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.util.regex.Matcher;
@@ -61,7 +61,9 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendAccountLockedEmail(String to) {
+    public void sendAccountLockedEmail(User user) {
+        String to = user.getEmail();
+
         String subject = "BLOGGER Hesap Kilitlendi";
         String text = "Merhaba,<br><br>" +
                 "Hesabınız, 5 kez başarısız giriş denemesinin ardından kilitlenmiştir. " +
