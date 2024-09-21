@@ -4,7 +4,9 @@ import com.blogger.backend.dto.request.RegisterUserRequest;
 import com.blogger.backend.dto.request.UserUnLockedRequset;
 import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.dto.response.GetUserByIdResponse;
+import com.blogger.backend.model.enums.Role;
 import com.blogger.backend.repository.UserRepository;
+import com.blogger.backend.service.AuthService;
 import com.blogger.backend.service.UserService;
 import com.blogger.backend.shared.GenericMessage;
 import com.blogger.backend.shared.Messages;
@@ -25,6 +27,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final AuthService authService;
 
 
     @PostMapping()
@@ -53,5 +56,11 @@ public class UserController {
         userService.unLockedUser(requset);
         return new GenericMessage(Messages.getMessageForLocale("blogger.register.user.unLocked.success.message.successfully",
                 LocaleContextHolder.getLocale()));
+    }
+    @PatchMapping("/{id}/role")
+    public ResponseEntity<?> assignRole(@PathVariable int id, @RequestParam Role newRole) {
+        int currentUserId = authService.getCurrentUserId();
+        userService.assignRole(id, newRole, currentUserId);
+        return ResponseEntity.ok(new GenericMessage("Rol başarıyla güncellendi"));
     }
 }
