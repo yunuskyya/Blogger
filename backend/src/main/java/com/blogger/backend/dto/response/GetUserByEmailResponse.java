@@ -2,8 +2,10 @@ package com.blogger.backend.dto.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class GetUserByEmailResponse {
+public class GetUserByEmailResponse implements Serializable {
     private int id;
     private String username;
     private String password;

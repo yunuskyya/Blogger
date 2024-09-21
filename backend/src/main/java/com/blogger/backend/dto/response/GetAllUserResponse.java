@@ -2,8 +2,10 @@ package com.blogger.backend.dto.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class GetAllUserResponse {
+public class GetAllUserResponse implements Serializable {
 
     private int id;
     private String username;
@@ -11,11 +13,5 @@ public class GetAllUserResponse {
     private String firstName;
     private String lastName;
     private String image;
-
-    public String getFullName() {
-        return (firstName != null ? firstName : "") +
-                " " +
-                (lastName != null ? lastName : "");
-    }
 
 }
