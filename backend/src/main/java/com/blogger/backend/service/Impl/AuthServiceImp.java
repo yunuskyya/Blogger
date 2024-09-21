@@ -1,5 +1,6 @@
 package com.blogger.backend.service.Impl;
 
+import com.blogger.backend.config.CurrentUser;
 import com.blogger.backend.config.ModelMapperConfig;
 import com.blogger.backend.dto.request.CredentialsRequest;
 import com.blogger.backend.dto.response.AuthResponse;
@@ -15,6 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +32,6 @@ public class AuthServiceImp implements AuthService {
     private final MailService mailService;
     private static final int MAX_ATTEMPTS = 2;
 
-
-
     @Autowired
     public AuthServiceImp(TokenService tokenService, PasswordEncoder passwordEncoder,
                           ModelMapperConfig modelMapperConfig, UserRepository userRepository, MailService mailService) {
@@ -41,8 +42,8 @@ public class AuthServiceImp implements AuthService {
         this.mailService = mailService;
     }
 
-
     private static final Logger logger = LogManager.getLogger(AuthServiceImp.class);
+
     @Override
     public AuthResponse authenticate(CredentialsRequest credentials) {
         User inDB = userRepository.findByEmail(credentials.email())
@@ -93,10 +94,17 @@ public class AuthServiceImp implements AuthService {
         return new AuthResponse(userResp, token);
     }
 
-
     @Override
     public void logout(String authorizationHeader) {
         tokenService.logout(authorizationHeader);
+    }
+
+    @Override
+    public int getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        int id = ((CurrentUser) authentication.getPrincipal()).getId();
+        logger.info("Current user id: {}", id);
+        return id;
     }
 }
 
