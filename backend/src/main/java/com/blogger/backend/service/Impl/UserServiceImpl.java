@@ -4,6 +4,7 @@ import com.blogger.backend.dto.request.RegisterUserRequest;
 import com.blogger.backend.dto.request.UserUnLockedRequset;
 import com.blogger.backend.dto.response.GetAllUserResponse;
 import com.blogger.backend.dto.response.GetUserByIdResponse;
+import com.blogger.backend.exception.AccessDeniedException;
 import com.blogger.backend.exception.GeneralErrorException;
 import com.blogger.backend.exception.InvalidTokenException;
 import com.blogger.backend.exception.UserNotFoundException;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -99,6 +101,21 @@ public class UserServiceImpl implements UserService {
         userInDb.setLocked(false);
         userRepository.save(userInDb);
     }
+    @Override
+    public void assignRole(int userId, Role newRole, int currentUserId) {
+        User currentUser = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new UserNotFoundException("Current user not found"));
 
+        if (!currentUser.getAuthorities().contains(Role.ROLE_ADMIN)) {
+            throw new AccessDeniedException();
+        }
+
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        Set<Role> updatedRoles = new HashSet<>();
+        updatedRoles.add(newRole);
+        userToUpdate.setAuthorities(updatedRoles);
+        userRepository.save(userToUpdate);
+    }
 
 }
