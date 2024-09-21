@@ -46,4 +46,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
 
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts;
+
 }
