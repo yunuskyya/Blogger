@@ -1,5 +1,6 @@
 package com.blogger.backend.controller;
 
+import com.blogger.backend.constant.BloggerConstant;
 import com.blogger.backend.dto.request.CredentialsRequest;
 import com.blogger.backend.dto.response.AuthResponse;
 import com.blogger.backend.service.AuthService;
@@ -14,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(BloggerConstant.API_V1 + "/auth")
 public class AuthController {
+
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
