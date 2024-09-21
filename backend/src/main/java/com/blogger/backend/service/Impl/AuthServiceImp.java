@@ -5,7 +5,6 @@ import com.blogger.backend.dto.request.CredentialsRequest;
 import com.blogger.backend.dto.response.AuthResponse;
 import com.blogger.backend.dto.response.GetUserByEmailResponse;
 import com.blogger.backend.exception.AuthenticationException;
-=import com.blogger.backend.exception.GeneralErrorException;
 import com.blogger.backend.model.Token;
 import com.blogger.backend.model.User;
 import com.blogger.backend.repository.UserRepository;
