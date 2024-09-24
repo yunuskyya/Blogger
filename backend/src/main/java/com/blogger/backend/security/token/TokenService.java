@@ -78,54 +78,6 @@ public class TokenService {
         }
     }
 
-    public Token findToken(String cookieValue) {
-        Object tokenData = redisTemplate.opsForValue().get(cookieValue);
-        if (tokenData == null) {
-            logger.error("Token not found: " + cookieValue);
-            return null;
-        } else if (tokenData instanceof LinkedHashMap) {
-            Token token = this.objectmapper.convertValue(tokenData, Token.class);
-            return token;
-        } else if (tokenData instanceof Token) {
-            return (Token) tokenData;
-        } else {
-            logger.error("Token data is not in the expected format: " + tokenData);
-            return null;
-        }
-    }
-
-    public void updateExpirationDate(Token token) {
-        token.setExpirationDate(System.currentTimeMillis() + (3 * 60 * 60 * 1000));
-        redisTemplate.opsForValue().set(token.getTokenId(), token);
-    }
-    public void updateTokenUser(int userId) {
-        User updatedUser = userRepository.findById(userId).orElseThrow(() -> {
-            logger.error("User not found: " + userId);
-            return new UserNotFoundException(userId);
-        });
-        Token token = findTokenByUserId(userId);
-        if (token != null) {
-            token.setUser(updatedUser);
-            redisTemplate.opsForValue().set(token.getTokenId(), token);
-        }
-        logger.info("Token updated for user: " + userId);
-    }
-
-    public Token findTokenByUserId(int userId) {
-        for (String key : redisTemplate.keys("*")) {
-            Object tokenData = redisTemplate.opsForValue().get(key);
-            Token token = null;
-            if (tokenData instanceof LinkedHashMap) {
-                token = this.objectmapper.convertValue(tokenData, Token.class);
-            } else if (tokenData instanceof Token) {
-                token = (Token) tokenData;
-            }
-            if (token != null && token.isActive() && !token.isExpired() && token.getUser().getId() == userId) {
-                return token;
-            }
-        }
-        return null;
-    }
 }
 
 

@@ -7,7 +7,6 @@ import com.blogger.backend.exception.AuthenticationException;
 import com.blogger.backend.model.Token;
 import com.blogger.backend.model.User;
 import com.blogger.backend.repository.UserRepository;
-import com.blogger.backend.service.AuthService;
 import com.blogger.backend.shared.Messages;
 import com.blogger.backend.security.token.TokenService;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +30,7 @@ import static org.mockito.Mockito.*;
 class AuthServiceImpTest {
 
     @InjectMocks
-    private AuthService authService;
+    private AuthServiceImp authService;
 
     @Mock
     private TokenService tokenService;
